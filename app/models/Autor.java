@@ -8,10 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import com.google.common.base.Objects;
 
@@ -31,11 +31,9 @@ public class Autor {
 	private String nome;
 
 	// Relação Muitos para Muitos
-	
+
 	@ManyToMany
-	@JoinTable(name="autor_livro" , 
-			joinColumns={@JoinColumn(name="autor_id")},
-			inverseJoinColumns={@JoinColumn(name="livro_id")})  
+	@JoinTable
 	private List<Livro> livros;
 
 	// Construtor Vazio para o Hibernate criar os objetos

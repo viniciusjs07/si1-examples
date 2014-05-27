@@ -10,11 +10,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import com.google.common.base.Objects;
 
 // Entidade que representa um Livro
 // Referenciar a uma tabela
+@Entity(name = "Livro")
+@Table(name = "TB_LIVRO")
 public class Livro {
 
 	// Todo Id tem que ter o GeneratedValue a não ser que ele seja setado
@@ -24,7 +27,7 @@ public class Livro {
 	// Usar Id sempre Long
 	private Long id;
 
-	@ManyToMany(mappedBy="livros")
+	@ManyToMany(mappedBy = "livros")
 	private List<Autor> autores;
 
 	@Column
