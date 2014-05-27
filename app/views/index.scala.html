@@ -20,6 +20,7 @@
                     <thead>
                         <tr>
                             <th>Nome </th>
+                            <th>Autor(es) </th>
                             <th>Ações </th>
                         </tr>
                     </thead>
@@ -27,6 +28,11 @@
                     @for(livro <- livros) {
                         <tr>
                             <td>@livro.getNome()</td>
+                            <td> 
+                                @for(autor <- livro.getAutores()) {
+                                    <p> @autor.getNome()</p>
+                                }
+                            </td>
                             <td>
                             <form action="@routes.Application.deleteBook(livro.getId())" method="post"> 
                                 <input type="submit" class="btn btn-danger" value="Delete">
@@ -43,9 +49,26 @@
         <h2>Adiciona um livro</h2>
 
         <form action="@routes.Application.newBook()" method="post"> 
+            <label for="nome"> Nome: </label>
             <input type="text" name="nome" id="inputNome" class="form-control"required="required">
             <input type="submit" class="btn btn-primary" value="Create">
         </form>
+
+        <h2>Adiciona um autor ao livro</h2>
+
+        <!-- vai receber o livro e o nome do autor -->
+        <form action="/books/addAutor" method="get"> 
+            <select name="livro" id="inputLivro" class="form-control">
+                <option value="" disabled>-- Select One --</option>
+                @for(livro <- livros) {
+                    <option value="@livro.getId()"> @livro.getNome()</option>
+                }
+            </select>
+            <label for="nome"> Autor: </label>
+            <input type="text" name="autor" id="inputAutor" class="form-control"required="required">
+            <input type="submit" class="btn btn-primary" value="ok">
+        </form>
+
         </div>
     </div>
 

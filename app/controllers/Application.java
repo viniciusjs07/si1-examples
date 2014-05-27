@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.List;
 
+import models.Autor;
 import models.Livro;
 import models.dao.GenericDAO;
 import models.dao.GenericDAOImpl;
@@ -34,6 +35,20 @@ public class Application extends Controller {
 			getDao().persist(filledForm.get());
 			return redirect(routes.Application.books());
 		}
+	}
+	
+	@Transactional
+	public static Result addAutor(Long id, String nome) {
+	
+		Autor a = new Autor();
+		a.setNome(nome);
+		Livro l = getDao().findByEntityId(Livro.class, id);
+		l.getAutores().add(a);
+	
+		getDao().persist(l);
+		
+		List<Livro> result = getDao().findAllByClassName("Livro");
+		return ok(views.html.index.render(result, bookForm));
 	}
 
 	@Transactional
