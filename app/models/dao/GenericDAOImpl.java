@@ -52,8 +52,8 @@ public class GenericDAOImpl implements GenericDAO {
 	@Override
 	public <T> List<T> findByAttributeName(String className,
 			String attributeName, String attributeValue) {
-		String hql = "FROM " + className + " WHERE " + attributeName + " = "
-				+ attributeName;
+		String hql = "FROM " + className + " c" + " WHERE c." + attributeName
+				+ " = '" + attributeValue + "'";
 		Query hqlQuery = JPA.em().createQuery(hql);
 		return hqlQuery.getResultList();
 	}

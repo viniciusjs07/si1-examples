@@ -11,13 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 import com.google.common.base.Objects;
 
 // Entidade que representa uma Tabela no Banco de Dados
 @Entity(name = "Autor")
-@Table(name = "TB_AUTOR")
 public class Autor {
 
 	@Id
@@ -31,7 +29,6 @@ public class Autor {
 	private String nome;
 
 	// Relação Muitos para Muitos
-
 	@ManyToMany
 	@JoinTable
 	private List<Livro> livros;

@@ -20,9 +20,7 @@ public class Application extends Controller {
 
 	@Transactional
 	public static Result books() {
-		// List<Livro> result = getDao().findAllByClassName("Livro");
-		List<Livro> result = getDao().findByAttributeName("Livro", "nome",
-				"marcos");
+		List<Livro> result = getDao().findAllByClassName("Livro");
 		return ok(views.html.index.render(result, bookForm));
 	}
 
