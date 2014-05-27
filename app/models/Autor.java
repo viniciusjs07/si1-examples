@@ -15,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 import com.google.common.base.Objects;
 
 // Entidade que representa uma Tabela no Banco de Dados
+// Sempre por o nome na Entidade, pois é esse nome que se vai usar nas pesquisas do Banco de Dados
 @Entity(name = "Autor")
 public class Autor {
 

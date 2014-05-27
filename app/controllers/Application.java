@@ -18,12 +18,16 @@ public class Application extends Controller {
 		return redirect(routes.Application.books());
 	}
 
+	// Notação transactional sempre que o método fizer transação com o Banco de
+	// Dados.
 	@Transactional
 	public static Result books() {
 		List<Livro> result = getDao().findAllByClassName("Livro");
 		return ok(views.html.index.render(result, bookForm));
 	}
 
+	// Notação transactional sempre que o método fizer transação com o Banco de
+	// Dados.
 	@Transactional
 	public static Result newBook() {
 		List<Livro> result = getDao().findAllByClassName("Livro");
@@ -32,10 +36,13 @@ public class Application extends Controller {
 			return badRequest(views.html.index.render(result, filledForm));
 		} else {
 			getDao().persist(filledForm.get());
+			getDao().flush();
 			return redirect(routes.Application.books());
 		}
 	}
 
+	// Notação transactional sempre que o método fizer transação com o Banco de
+	// Dados.
 	@Transactional
 	public static Result deleteBook(Long id) {
 		getDao().removeById(Livro.class, id);
