@@ -2,51 +2,46 @@ package controllers;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
-import models.GenericDAO;
 import models.Livro;
+import models.dao.GenericDAO;
+import models.dao.GenericDAOImpl;
 import play.data.Form;
-import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 public class Application extends Controller {
 	static Form<Livro> bookForm = Form.form(Livro.class);
-	private static GenericDAO dao = new GenericDAO();
+	private static GenericDAO dao = new GenericDAOImpl();
 
-	@Transactional
 	public static Result index() {
 		return redirect(routes.Application.books());
 	}
 
 	@Transactional
 	public static Result books() {
-		String hql = "from Livro";
-		Query query = JPA.em().createQuery(hql);
-		List<Livro> result = query.getResultList();
+		// List<Livro> result = getDao().findAllByClassName("Livro");
+		List<Livro> result = getDao().findByAttributeName("Livro", "nome",
+				"marcos");
 		return ok(views.html.index.render(result, bookForm));
 	}
 
 	@Transactional
 	public static Result newBook() {
-		String hql = "from Livro";
-		Query query = JPA.em().createQuery(hql);
-		List<Livro> result = query.getResultList();
+		List<Livro> result = getDao().findAllByClassName("Livro");
 		Form<Livro> filledForm = bookForm.bindFromRequest();
 		if (filledForm.hasErrors()) {
 			return badRequest(views.html.index.render(result, filledForm));
 		} else {
-			getDao().salvar(filledForm.get());
+			getDao().persist(filledForm.get());
 			return redirect(routes.Application.books());
 		}
 	}
 
 	@Transactional
 	public static Result deleteBook(Long id) {
-		getDao().deletaPeloId(Livro.class, id);
-		getDao().espelhar();
+		getDao().removeById(Livro.class, id);
+		getDao().flush();
 		return redirect(routes.Application.books());
 	}
 

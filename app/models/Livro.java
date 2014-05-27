@@ -14,13 +14,17 @@ import javax.persistence.Table;
 
 import com.google.common.base.Objects;
 
+// Entidade que representa um Livro
 @Entity(name = "Livro")
+// Referenciar a uma tabela
 @Table(name = "TB_Livro")
 public class Livro {
 
+	// Todo Id tem que ter o GeneratedValue a não ser que ele seja setado
 	@Id
 	@SequenceGenerator(name = "LIVRO_SEQUENCE", sequenceName = "LIVRO_SEQUENCE", allocationSize = 1, initialValue = 0)
 	@GeneratedValue(strategy = GenerationType.TABLE)
+	// Usar Id sempre Long
 	private Long id;
 
 	@ManyToMany
@@ -29,6 +33,7 @@ public class Livro {
 	@Column
 	private String nome;
 
+	// Construtor vazio para o Hibernate criar os objetos
 	public Livro() {
 	}
 
@@ -53,6 +58,14 @@ public class Livro {
 		this.autores = autores;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null || !(obj instanceof Livro)) {
@@ -65,13 +78,5 @@ public class Livro {
 	@Override
 	public int hashCode() {
 		return Objects.hashCode(this.getNome());
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 }

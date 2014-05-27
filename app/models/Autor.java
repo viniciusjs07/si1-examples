@@ -16,8 +16,8 @@ import javax.persistence.Table;
 import com.google.common.base.Objects;
 
 // Entidade que representa uma Tabela no Banco de Dados
-@Entity
-@Table
+@Entity(name = "Autor")
+@Table(name = "TB_AUTOR")
 public class Autor {
 
 	@Id
@@ -29,8 +29,8 @@ public class Autor {
 	// Nome do Autor dos Livros
 	@Column
 	private String nome;
+
 	// Relação Muitos para Muitos
-	@Column
 	@ManyToMany
 	@JoinTable
 	private List<Livro> livros;
@@ -59,6 +59,14 @@ public class Autor {
 		this.nome = nome;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
@@ -74,13 +82,5 @@ public class Autor {
 	@Override
 	public int hashCode() {
 		return Objects.hashCode(this.nome);
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 }
