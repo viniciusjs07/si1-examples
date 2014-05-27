@@ -10,12 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 import com.google.common.base.Objects;
 
-@Entity(name = "Livro")
-@Table(name = "TB_Livro")
+@Entity
 public class Livro {
 
 	@Id
@@ -23,7 +21,7 @@ public class Livro {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	@ManyToMany
+	@ManyToMany(mappedBy="livros")
 	private List<Autor> autores;
 
 	@Column
