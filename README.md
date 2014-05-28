@@ -10,7 +10,7 @@ Detalhes sobre a instalação podem ser vistos [aqui] [1]:
 
 > Utilização
 
-- Suas classes à serem persistidas devem conter um extends Model
+- Suas classes à serem persistidas devem conter um @Entity
 - togos os atributos private devem possuir get e set
 - a classe deve possuir um construtor vazio
 - preencher a classe adequadamente com anotações @...
