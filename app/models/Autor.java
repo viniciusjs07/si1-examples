@@ -1,8 +1,10 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,12 +32,13 @@ public class Autor {
 	private String nome;
 
 	// Relação Muitos para Muitos
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable
 	private List<Livro> livros;
 
 	// Construtor Vazio para o Hibernate criar os objetos
 	public Autor() {
+		this.livros = new ArrayList<Livro>();
 	}
 
 	public Autor(Livro... livros) {
