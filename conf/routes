@@ -10,3 +10,5 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /books                  controllers.Application.books()
 POST    /books                  controllers.Application.newBook()
 POST    /books/:id/delete       controllers.Application.deleteBook(id: Long)
+
+GET     /books/addAutor        controllers.Application.addAutor(livro:Long, autor:String)
