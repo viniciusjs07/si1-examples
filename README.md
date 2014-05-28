@@ -17,7 +17,6 @@ Detalhes sobre a instalação podem ser vistos [aqui] [1]:
 - exemplo de uma Entidade [aqui] [2]
 
 ##Relacionamentos
-===========================================
 
 #### OneToOne - Relação de Um para Um
 
