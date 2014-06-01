@@ -2,6 +2,8 @@ package models.dao;
 
 import java.util.List;
 
+import javax.persistence.Query;
+
 /**
  * Serviços simples de um Data Access Object (DAO)
  */
@@ -50,4 +52,8 @@ public interface GenericDAO {
 	<T> List<T> findByAttributeName(String className, String attributeName,
 			String attributeValue);
 
+	/**
+	 * Cria uma Query HQL
+	 */
+	Query createQuery(String query);
 }

@@ -57,4 +57,9 @@ public class GenericDAOImpl implements GenericDAO {
 		Query hqlQuery = JPA.em().createQuery(hql);
 		return hqlQuery.getResultList();
 	}
+
+	@Override
+	public Query createQuery(String query) {
+		return JPA.em().createQuery(query);
+	}
 }

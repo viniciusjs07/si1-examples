@@ -21,8 +21,8 @@ import com.google.common.base.Objects;
 @Entity(name = "Autor")
 public class Autor {
 
-	@Id
 	// Gerador de Sequencia para o Id
+	@Id
 	@SequenceGenerator(name = "AUTOR_SEQUENCE", sequenceName = "AUTOR_SEQUENCE", allocationSize = 1, initialValue = 0)
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
