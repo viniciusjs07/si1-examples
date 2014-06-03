@@ -11,7 +11,7 @@ Detalhes sobre a instalação podem ser vistos [aqui] [1]:
 > Utilização
 
 - Suas classes à serem persistidas devem conter um @Entity
-- togos os atributos private devem possuir get e set
+- todos os atributos private devem possuir get e set
 - a classe deve possuir um construtor vazio
 - preencher a classe adequadamente com anotações @...
 - exemplo de uma Entidade [aqui] [2]
@@ -65,7 +65,7 @@ Utilizem o Piazza!
 
 
 
-[1]:http://www.playframework.com/documentation/2.1.0/JavaJPA
+[1]:http://www.playframework.com/documentation/2.2.x/JavaJPA
 [2]:https://github.com/marcosvcp/si1-examples/blob/master/app/models/Autor.java
 [3]:https://github.com/marcosvcp/si1-examples/blob/master/app/models/Autor.java#L35
 
