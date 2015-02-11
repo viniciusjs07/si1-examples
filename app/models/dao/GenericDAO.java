@@ -14,6 +14,11 @@ public interface GenericDAO {
 	boolean persist(Object e);
 
 	/**
+	 * Retorna todos as entidades da {@code clazz} paginado pelo {@code pageNumber}
+	 */
+	<T> List<T> findAllByClass(Class<T> clazz, int pageNumber);
+	
+	/**
 	 * Espelha o estado do DAO com o banco de Dados, deve ser feito após um
 	 * persist, ou merge.
 	 */

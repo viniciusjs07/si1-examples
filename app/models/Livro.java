@@ -37,10 +37,14 @@ public class Livro {
 	public Livro() {
 		this.autores = new ArrayList<Autor>();
 	}
+	
+	public Livro(String nome) {
+		this();
+		this.nome = nome;
+	}
 
 	public Livro(Autor... autores) {
 		this.setAutores(Arrays.asList(autores));
-
 	}
 
 	public String getNome() {

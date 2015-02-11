@@ -3,6 +3,10 @@ package models.dao;
 import java.util.List;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import play.db.jpa.JPA;
 
@@ -10,6 +14,8 @@ import play.db.jpa.JPA;
  * Camada genérica para acesso ao Banco de Dados
  */
 public class GenericDAOImpl implements GenericDAO {
+	// Resultados por página
+	public static final int MAX_RESULTS = 50;
 
 	@Override
 	public boolean persist(Object e) {
@@ -61,5 +67,17 @@ public class GenericDAOImpl implements GenericDAO {
 	@Override
 	public Query createQuery(String query) {
 		return JPA.em().createQuery(query);
+	}
+	
+	@Override
+	public <T> List<T> findAllByClass(Class<T> clazz, int pageNumber) {
+		CriteriaBuilder criteriaBuilder = JPA.em().getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(clazz);
+		Root<T> from = criteriaQuery.from(clazz);
+		CriteriaQuery<T> select = criteriaQuery.select(from);
+		TypedQuery<T> typedQuery = JPA.em().createQuery(select);
+		typedQuery.setFirstResult((pageNumber - 1) * MAX_RESULTS);
+		typedQuery.setMaxResults(MAX_RESULTS);
+		return typedQuery.getResultList();
 	}
 }
