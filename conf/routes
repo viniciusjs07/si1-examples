@@ -10,6 +10,5 @@ GET     /assets/*file               					   	controllers.Assets.at(path="/public
 GET     /books					          					controllers.Application.books(page: Integer ?=1, pagesize: Integer ?=50)
 POST    /books                  							controllers.Application.newBook()
 POST    /books/:id/delete       							controllers.Application.deleteBook(id: Long)
-GET 	/books/reload										controllers.Application.reload()
 
 GET     /books/addAutor        								controllers.Application.addAutor(livro:Long, autor:String)

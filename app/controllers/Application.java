@@ -41,11 +41,6 @@ public class Application extends Controller {
 				getDao().findAllByClass(Livro.class, page, pageSize), bookForm));
 	}
 
-	@Transactional
-	public static Result reload() {
-		return redirect(routes.Application.books(FIRST_PAGE, GenericDAOImpl.DEFAULT_RESULTS));
-	}
-
 	// Notação transactional sempre que o método fizer transação com o Banco de
 	// Dados.
 	@Transactional
