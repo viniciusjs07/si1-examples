@@ -1,6 +1,5 @@
 @(livros: List[Livro], livroForm: Form[Livro])
 
-
 <html lang="">
     <head>
         <title>Hibernate Example</title>
@@ -16,6 +15,10 @@
     	<div class="col-sm-5">
         <h2 class="text-center">@livros.size() livro(s)</h2>
             <div class="table-responsive">
+           		<a class="btn" href='@routes.Application.books()'>First</a>
+            	<a class="btn align-right" href='@routes.Application.books(Integer.parseInt(session.get("actualPage")) - 1 )'>Previous</a>
+                <a class="btn" href='@routes.Application.books(Integer.parseInt(session.get("actualPage")) + 1 )'>Next</a>
+                <a class="btn" href='@routes.Application.books(Integer.MAX_VALUE)'>Last</a>
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -42,8 +45,6 @@
                     }
                     </tbody>
                 </table>
-                <a class="btn" href="@routes.Application.moreBooks()">Load More</a>
-                <a class="btn align-right" href="@routes.Application.reload()">Reload</a>
             </div>
         </div>
 

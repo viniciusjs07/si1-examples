@@ -15,7 +15,7 @@ import play.db.jpa.JPA;
  */
 public class GenericDAOImpl implements GenericDAO {
 	// Resultados por página
-	public static final int MAX_RESULTS = 50;
+	public static final int DEFAULT_RESULTS = 50;
 
 	@Override
 	public boolean persist(Object e) {
@@ -68,16 +68,26 @@ public class GenericDAOImpl implements GenericDAO {
 	public Query createQuery(String query) {
 		return JPA.em().createQuery(query);
 	}
-	
+
 	@Override
-	public <T> List<T> findAllByClass(Class<T> clazz, int pageNumber) {
+	public <T> Long countAllByClass(Class<T> clazz) {
+		// Total de entidades
+		CriteriaBuilder qb = JPA.em().getCriteriaBuilder();
+		CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+		cq.select(qb.count(cq.from(clazz)));
+		return JPA.em().createQuery(cq).getSingleResult();
+	}
+
+	@Override
+	public <T> List<T> findAllByClass(Class<T> clazz, int pageNumber,
+			int pageSize) {
 		CriteriaBuilder criteriaBuilder = JPA.em().getCriteriaBuilder();
 		CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(clazz);
 		Root<T> from = criteriaQuery.from(clazz);
 		CriteriaQuery<T> select = criteriaQuery.select(from);
 		TypedQuery<T> typedQuery = JPA.em().createQuery(select);
-		typedQuery.setFirstResult((pageNumber - 1) * MAX_RESULTS);
-		typedQuery.setMaxResults(MAX_RESULTS);
+		typedQuery.setFirstResult((pageNumber - 1) * pageSize);
+		typedQuery.setMaxResults(pageSize);
 		return typedQuery.getResultList();
 	}
 }

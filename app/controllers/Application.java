@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import models.Autor;
@@ -18,36 +17,35 @@ import play.mvc.Result;
 public class Application extends Controller {
 	static Form<Livro> bookForm = Form.form(Livro.class);
 	private static GenericDAO dao = new GenericDAOImpl();
-	private static List<Livro> livros = new ArrayList<Livro>();
-	public static Result index() {
-		return redirect(routes.Application.books());
+	private static final int FIRST_PAGE = 1;
+
+	// Regex de um inteiro positivo
+	public static Result index() { 
+		return redirect(routes.Application.books(FIRST_PAGE, GenericDAOImpl.DEFAULT_RESULTS));
 	}
 
 	// Notação transactional sempre que o método fizer transação com o Banco de
 	// Dados.
 	@Transactional
-	public static Result books() {
-		// Todos os Livros do Banco de Dados de acordo com a {@code pageNumber}
-		if(livros.isEmpty()){
-			return redirect(routes.Application.moreBooks());
+	public static Result books(int page, int pageSize) {
+		page = page >= FIRST_PAGE ? page : FIRST_PAGE;
+		pageSize = pageSize >= FIRST_PAGE ? pageSize : GenericDAOImpl.DEFAULT_RESULTS;
+		Long entityNumber = dao.countAllByClass(Livro.class);
+		// Se a página pedida for maior que o número de entidades
+		if (page > (entityNumber / pageSize)) {
+			// A última página
+			page = (int) (Math.ceil(entityNumber / Float.parseFloat(String.valueOf(pageSize))));
 		}
-		return ok(views.html.index.render(livros, bookForm));
+		session("actualPage", String.valueOf(page));
+		return ok(views.html.index.render(
+				getDao().findAllByClass(Livro.class, page, pageSize), bookForm));
 	}
-	
+
 	@Transactional
 	public static Result reload() {
-		livros = new ArrayList<>();
-		return redirect(routes.Application.books());
+		return redirect(routes.Application.books(FIRST_PAGE, GenericDAOImpl.DEFAULT_RESULTS));
 	}
-	
-	@Transactional
-	public static Result moreBooks() {
-		// Todos os Livros do Banco de Dados de acordo com a {@code pageNumber}
-		int pageNumber = (int) Math.ceil((livros.size() + 1 )/ (float) GenericDAOImpl.MAX_RESULTS);
-		livros.addAll(getDao().findAllByClass(Livro.class, pageNumber));
-		return ok(views.html.index.render(livros, bookForm));
-	}
-	
+
 	// Notação transactional sempre que o método fizer transação com o Banco de
 	// Dados.
 	@Transactional
@@ -55,22 +53,21 @@ public class Application extends Controller {
 		// O formulário dos Livros Preenchidos
 		Form<Livro> filledForm = bookForm.bindFromRequest();
 		if (filledForm.hasErrors()) {
-			return badRequest(views.html.index.render(livros, filledForm));
+			return badRequest(views.html.index.render(firstPage(), filledForm));
 		} else {
 			Livro livro = filledForm.get();
 			// Persiste o Livro criado
 			getDao().persist(livro);
 			// Espelha no Banco de Dados
 			getDao().flush();
-			livros.add(livro);
-			return redirect(routes.Application.books());
+			return redirect(routes.Application.books(FIRST_PAGE, GenericDAOImpl.DEFAULT_RESULTS));
 		}
 	}
 
 	@Transactional
 	public static Result addAutor(Long id, String nome) {
 		criaAutorDoLivro(id, nome);
-		return ok(views.html.index.render(livros, bookForm));
+		return ok(views.html.index.render(firstPage(), bookForm));
 	}
 
 	private static void criaAutorDoLivro(Long id, String nome) {
@@ -79,7 +76,6 @@ public class Application extends Controller {
 		novoAutor.setNome(nome);
 		// Procura um objeto da classe Livro com o {@code id}
 		Livro livroDaListagem = getDao().findByEntityId(Livro.class, id);
-		int index = livros.indexOf(livroDaListagem);
 		// Faz o direcionamento de cada um
 		livroDaListagem.getAutores().add(novoAutor);
 		novoAutor.getLivros().add(livroDaListagem);
@@ -89,20 +85,25 @@ public class Application extends Controller {
 		getDao().merge(livroDaListagem);
 		// Espelha no Banco de Dados
 		getDao().flush();
-		livros.set(index, livroDaListagem);
 	}
 
 	// Notação transactional sempre que o método fizer transação com o Banco de
 	// Dados.
 	@Transactional
 	public static Result deleteBook(Long id) {
-		Livro livroDaListagem = getDao().findByEntityId(Livro.class, id);
-		livros.remove(livroDaListagem);
 		// Remove o Livro pelo Id
 		getDao().removeById(Livro.class, id);
 		// Espelha no banco de dados
 		getDao().flush();
-		return redirect(routes.Application.books());
+		return redirect(routes.Application.books(FIRST_PAGE, GenericDAOImpl.DEFAULT_RESULTS));
+	}
+
+	/**
+	 * Retorna a primeira página do banco de dados
+	 */
+	private static List<Livro> firstPage() {
+		return getDao().findAllByClass(Livro.class, FIRST_PAGE,
+				GenericDAOImpl.DEFAULT_RESULTS);
 	}
 
 	public static GenericDAO getDao() {

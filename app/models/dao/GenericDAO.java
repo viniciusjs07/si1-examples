@@ -14,9 +14,9 @@ public interface GenericDAO {
 	boolean persist(Object e);
 
 	/**
-	 * Retorna todos as entidades da {@code clazz} paginado pelo {@code pageNumber}
+	 * Retorna todos as entidades da {@code clazz} paginado pelo {@code pageNumber} com o tamanho da {@code pageSize}
 	 */
-	<T> List<T> findAllByClass(Class<T> clazz, int pageNumber);
+	<T> List<T> findAllByClass(Class<T> clazz, int pageNumber, int pageSize);
 	
 	/**
 	 * Espelha o estado do DAO com o banco de Dados, deve ser feito após um
@@ -61,4 +61,9 @@ public interface GenericDAO {
 	 * Cria uma Query HQL
 	 */
 	Query createQuery(String query);
+
+	/**
+	 * Retorna quantas entidades da {@code clazz} estão no banco de dados
+	 */
+	<T> Long countAllByClass(Class<T> clazz);
 }
