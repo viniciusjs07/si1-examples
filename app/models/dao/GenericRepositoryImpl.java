@@ -13,7 +13,7 @@ import play.db.jpa.JPA;
 /**
  * Camada genérica para acesso ao Banco de Dados
  */
-public class GenericDAOImpl implements GenericDAO {
+public class GenericRepositoryImpl implements GenericRepository {
 	// Resultados por página
 	public static final int DEFAULT_RESULTS = 50;
 

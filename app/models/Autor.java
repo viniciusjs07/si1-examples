@@ -18,17 +18,16 @@ import com.google.common.base.Objects;
 
 // Entidade que representa uma Tabela no Banco de Dados
 // Sempre por o nome na Entidade, pois é esse nome que se vai usar nas pesquisas do Banco de Dados
-@Entity(name = "Autor")
+@Entity
 public class Autor {
 
 	// Gerador de Sequencia para o Id
 	@Id
-	@SequenceGenerator(name = "AUTOR_SEQUENCE", sequenceName = "AUTOR_SEQUENCE", allocationSize = 1, initialValue = 0)
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue
 	private Long id;
 
 	// Nome do Autor dos Livros
-	@Column
+	@Column(unique=true)
 	private String nome;
 
 	// Relação Muitos para Muitos

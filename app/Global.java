@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.Livro;
-import models.dao.GenericDAO;
-import models.dao.GenericDAOImpl;
+import models.dao.GenericRepository;
+import models.dao.GenericRepositoryImpl;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -12,7 +12,7 @@ import play.db.jpa.JPA;
 
 public class Global extends GlobalSettings {
 
-	private static GenericDAO dao = new GenericDAOImpl();
+	private static GenericRepository dao = new GenericRepositoryImpl();
 	
 	private List<Livro> livros = new ArrayList<>();
 	

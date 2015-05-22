@@ -7,7 +7,7 @@ import javax.persistence.Query;
 /**
  * Serviços simples de um Data Access Object (DAO)
  */
-public interface GenericDAO {
+public interface GenericRepository {
 	/**
 	 * Persiste uma entidade no Banco de Dados.
 	 */

@@ -17,13 +17,12 @@ import com.google.common.base.Objects;
 
 // Entidade que representa um Livro
 // Referenciar a uma tabela
-@Entity(name = "Livro")
+@Entity
 public class Livro {
 
 	// Todo Id tem que ter o GeneratedValue a não ser que ele seja setado
 	@Id
-	@SequenceGenerator(name = "LIVRO_SEQUENCE", sequenceName = "LIVRO_SEQUENCE", allocationSize = 1, initialValue = 0)
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue
 	// Usar Id sempre Long
 	private Long id;
 
