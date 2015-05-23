@@ -8,11 +8,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.SequenceGenerator;
 
 import com.google.common.base.Objects;
 
@@ -27,7 +25,7 @@ public class Autor {
 	private Long id;
 
 	// Nome do Autor dos Livros
-	@Column(unique=true)
+	@Column(unique = true)
 	private String nome;
 
 	// Relação Muitos para Muitos

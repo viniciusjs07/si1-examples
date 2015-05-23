@@ -4,8 +4,8 @@ import java.util.List;
 
 import models.Autor;
 import models.Livro;
-import models.dao.GenericRepository;
-import models.dao.GenericRepositoryImpl;
+import models.repository.AutorRepository;
+import models.repository.LivroRepository;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
@@ -18,13 +18,16 @@ import com.google.common.collect.Iterables;
  */
 public class Application extends Controller {
 	static Form<Livro> bookForm = Form.form(Livro.class);
-	private static GenericRepository dao = new GenericRepositoryImpl();
+	private static LivroRepository livroRepository = LivroRepository
+			.getInstance();
+	private static AutorRepository autorRepository = AutorRepository
+			.getInstance();
 	private static final int FIRST_PAGE = 1;
 
 	// Regex de um inteiro positivo
 	public static Result index() {
 		return redirect(routes.Application.books(FIRST_PAGE,
-				GenericRepositoryImpl.DEFAULT_RESULTS));
+				LivroRepository.DEFAULT_RESULTS));
 	}
 
 	// Notação transactional sempre que o método fizer transação com o Banco de
@@ -33,8 +36,8 @@ public class Application extends Controller {
 	public static Result books(int page, int pageSize) {
 		page = page >= FIRST_PAGE ? page : FIRST_PAGE;
 		pageSize = pageSize >= FIRST_PAGE ? pageSize
-				: GenericRepositoryImpl.DEFAULT_RESULTS;
-		Long entityNumber = dao.countAllByClass(Livro.class);
+				: LivroRepository.DEFAULT_RESULTS;
+		Long entityNumber = livroRepository.countAll();
 		// Se a página pedida for maior que o número de entidades
 		if (page > (entityNumber / pageSize)) {
 			// A última página
@@ -43,7 +46,7 @@ public class Application extends Controller {
 		}
 		session("actualPage", String.valueOf(page));
 		return ok(views.html.index.render(
-				getDao().findAllByClass(Livro.class, page, pageSize), bookForm));
+				livroRepository.findAll(page, pageSize), bookForm));
 	}
 
 	// Notação transactional sempre que o método fizer transação com o Banco de
@@ -57,11 +60,11 @@ public class Application extends Controller {
 		} else {
 			Livro livro = filledForm.get();
 			// Persiste o Livro criado
-			getDao().persist(livro);
+			livroRepository.persist(livro);
 			// Espelha no Banco de Dados
-			getDao().flush();
+			livroRepository.flush();
 			return redirect(routes.Application.books(FIRST_PAGE,
-					GenericRepositoryImpl.DEFAULT_RESULTS));
+					LivroRepository.DEFAULT_RESULTS));
 		}
 	}
 
@@ -72,26 +75,22 @@ public class Application extends Controller {
 	}
 
 	private static void criaAutorDoLivro(Long id, String nome) {
-		Query query = getDao().createQuery("from autor a where a.nome=:nome");
-		query.setParameter("nome", nome);
-		
-		Autor autor = (Autor) query.uniqueResult();
-		
+		Autor autor = autorRepository.findByName(nome);
 		// Procura um objeto da classe Livro com o {@code id}
-		Livro livroDaListagem = getDao().findByEntityId(Livro.class, id);
+		Livro livroDaListagem = livroRepository.findByEntityId(id);
 		// Cria um novo Autor para um livro de {@code id}
 		if (autor == null) {
 			autor = new Autor();
 			autor.setNome(nome);
 			// Persiste o Novo Autor
-			getDao().persist(autor);
+			autorRepository.persist(autor);
 		}
 		autor.getLivros().add(livroDaListagem);
 		livroDaListagem.getAutores().add(autor);
 		// Atualiza as informações do livro
-		getDao().merge(livroDaListagem);
+		livroRepository.merge(livroDaListagem);
 		// Espelha no Banco de Dados
-		getDao().flush();
+		livroRepository.flush();
 	}
 
 	// Notação transactional sempre que o método fizer transação com o Banco de
@@ -99,26 +98,18 @@ public class Application extends Controller {
 	@Transactional
 	public static Result deleteBook(Long id) {
 		// Remove o Livro pelo Id
-		getDao().removeById(Livro.class, id);
+		livroRepository.removeById(id);
 		// Espelha no banco de dados
-		getDao().flush();
+		livroRepository.flush();
 		return redirect(routes.Application.books(FIRST_PAGE,
-				GenericRepositoryImpl.DEFAULT_RESULTS));
+				LivroRepository.DEFAULT_RESULTS));
 	}
 
 	/**
 	 * Retorna a primeira página do banco de dados
 	 */
 	private static List<Livro> firstPage() {
-		return getDao().findAllByClass(Livro.class, FIRST_PAGE,
-				GenericRepositoryImpl.DEFAULT_RESULTS);
-	}
-
-	public static GenericRepository getDao() {
-		return dao;
-	}
-
-	public static void setDao(GenericRepository dao) {
-		Application.dao = dao;
+		return livroRepository.findAll(FIRST_PAGE,
+				LivroRepository.DEFAULT_RESULTS);
 	}
 }
