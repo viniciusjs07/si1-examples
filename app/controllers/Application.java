@@ -41,8 +41,12 @@ public class Application extends Controller {
 		// Se a página pedida for maior que o número de entidades
 		if (page > (entityNumber / pageSize)) {
 			// A última página
-			page = (int) (Math.ceil(entityNumber
-					/ Float.parseFloat(String.valueOf(pageSize))));
+			if (entityNumber != 0) {
+				page = (int) (Math.ceil(entityNumber
+						/ Float.parseFloat(String.valueOf(pageSize))));
+			} else {
+				page = FIRST_PAGE;
+			}
 		}
 		session("actualPage", String.valueOf(page));
 		return ok(views.html.index.render(

@@ -38,7 +38,7 @@
                             </td>
                             <td>
                             <form action="@routes.Application.deleteBook(livro.getId())" method="post"> 
-                                <input type="submit" class="btn btn-danger" value="Delete">
+                                <input id="deleteLivro@livro.getId()" type="submit" class="btn btn-danger" value="Delete">
                             </form>
                             </td>
                         </tr>
@@ -54,7 +54,7 @@
         <form action="@routes.Application.newBook()" method="post"> 
             <label for="nome"> Nome: </label>
             <input type="text" name="nome" id="inputNome" class="form-control"required="required">
-            <input type="submit" class="btn btn-primary" value="Create">
+            <input type="submit" id="submitNewBook" class="btn btn-primary" value="Create">
         </form>
 
         <h2>Adiciona um autor ao livro</h2>
