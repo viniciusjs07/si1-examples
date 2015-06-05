@@ -16,6 +16,7 @@ import play.mvc.Result;
 import play.test.FakeApplication;
 import play.test.FakeRequest;
 import play.test.Helpers;
+import play.test.WithApplication;
 import scala.Option;
 
 import com.google.common.collect.ImmutableMap;
@@ -28,21 +29,16 @@ import controllers.Application;
  * interested in mocking a whole application, see the wiki for more details.
  * 
  */
-public class ApplicationTest {
+public class ApplicationTest extends WithApplication {
 	private int PAGE_NUMBER = 1;
 	private int PAGE_SIZE = 50;
 	private long ID_ONE = 1L;
 	
 	public EntityManager em;
 
-    @Before
-    public void setUp() {
-    	FakeApplication app = Helpers.fakeApplication(new GlobalSettings());
-    	Helpers.start(app);
-        Option<JPAPlugin> jpaPlugin = app.getWrappedApplication().plugin(JPAPlugin.class);
-        em = jpaPlugin.get().em("default");
-        JPA.bindForCurrentThread(em);
-        em.getTransaction().begin();
+    @Override
+    public FakeApplication provideFakeApplication(){
+        return fakeApplication(inMemoryDatabase(), fakeGlobal());
     }
 
 	@Test
@@ -93,11 +89,4 @@ public class ApplicationTest {
 		//O outro livro continua lá.
 		assertThat(contentAsString(resultGet)).contains("O Lobo da Estepe");
 	}
-	
-	@After
-    public void tearDown() {
-        em.getTransaction().commit();
-        JPA.bindForCurrentThread(null);
-        em.close();
-    }
 }
