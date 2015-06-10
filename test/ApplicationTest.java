@@ -30,7 +30,7 @@ import controllers.Application;
  * 
  */
 public class ApplicationTest extends WithApplication {
-	/**private int PAGE_NUMBER = 1;
+	private int PAGE_NUMBER = 1;
 	private int PAGE_SIZE = 50;
 	private long ID_ONE = 1L;
 	
@@ -88,5 +88,5 @@ public class ApplicationTest extends WithApplication {
 		assertThat(contentAsString(resultGet)).doesNotContain("Sidarta");
 		//O outro livro continua lá.
 		assertThat(contentAsString(resultGet)).contains("O Lobo da Estepe");
-	}**/
+	}
 }

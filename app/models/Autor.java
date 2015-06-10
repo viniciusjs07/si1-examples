@@ -1,26 +1,23 @@
 package models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.SequenceGenerator;
 
 import com.google.common.base.Objects;
 
 // Entidade que representa uma Tabela no Banco de Dados
-@Entity(name="Anunciante")
-public class Anunciante {
+// Sempre por o nome na Entidade, pois é esse nome que se vai usar nas pesquisas do Banco de Dados
+@Entity
+public class Autor {
 
 	// Gerador de Sequencia para o Id
 	@Id
@@ -28,29 +25,37 @@ public class Anunciante {
 	private Long id;
 
 	// Nome do Autor dos Livros
+	@Column(unique = true)
 	private String nome;
 
 	// Relação Muitos para Muitos
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable
-	private List<Anuncio> anuncios;
+	private List<Livro> livros;
 
 	// Construtor Vazio para o Hibernate criar os objetos
-	public Anunciante() {
-		this.anuncios = new ArrayList<Anuncio>();
+	public Autor() {
+		this.livros = new ArrayList<Livro>();
 	}
 
-    public Anunciante(String nome) {
-        this();
-        this.nome = nome;
-    }
+	public Autor(Livro... livros) {
+		this.livros = Arrays.asList(livros);
+	}
 
-	public List<Anuncio> getLivros() {
-		return Collections.unmodifiableList(anuncios);
+	public List<Livro> getLivros() {
+		return livros;
+	}
+
+	public void setLivros(List<Livro> livros) {
+		this.livros = livros;
 	}
 
 	public String getNome() {
 		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public Long getId() {
@@ -66,10 +71,10 @@ public class Anunciante {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof Anunciante)) {
+		if (!(obj instanceof Autor)) {
 			return false;
 		}
-		Anunciante outroAutor = (Anunciante) obj;
+		Autor outroAutor = (Autor) obj;
 		return Objects.equal(outroAutor.getNome(), this.getNome());
 	}
 
@@ -77,8 +82,4 @@ public class Anunciante {
 	public int hashCode() {
 		return Objects.hashCode(this.nome);
 	}
-
-    public void addAnuncio(Anuncio anuncio) {
-        this.anuncios.add(anuncio);
-    }
 }

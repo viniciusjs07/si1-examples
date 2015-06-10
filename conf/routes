@@ -3,17 +3,12 @@
 # ~~~~
 
 # Home page
-GET     /                         controllers.Application.index()
+GET     /                           controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
-GET     /visualizarAnuncio                controllers.Application.anuncio()
-GET     /CriarAnuncio					controllers.Application.criar()
-GET     /pesquisa               controllers.Application.pesquisa()
-GET     /pesquisarAnuncio       controllers.Application.pesquisarAnuncio()
-POST    /pesquisarAnuncio       controllers.Application.pesquisarAnuncio()
-POST    /pesquisa               controllers.Application.pesquisa()
-POST    /CriarAnuncio                  controllers.Application.criar()
-POST    /anuncio                  controllers.Application.newAnuncio()
-POST    /anuncio/:id/delete       controllers.Application.deleteAnuncio(id: Long)
+GET     /assets/*file               					   	controllers.Assets.at(path="/public", file)
+GET     /books					          					controllers.Application.books(page: Integer ?=1, pagesize: Integer ?=50)
+POST    /books                  							controllers.Application.newBook()
+POST    /books/:id/delete       							controllers.Application.deleteBook(id: Long)
 
+GET     /books/addAutor        								controllers.Application.addAutor(livro:Long, autor:String)
