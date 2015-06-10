@@ -1,0 +1,141 @@
+@(anuncios: List[Anuncio])
+
+<html lang="">
+<head>
+   <title>Stilo Musical</title>
+        <meta charset="UTF-8">
+        <meta name=description content="">
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap CSS -->
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+	 <style type="text/css">
+	<!--h1 {font-size: 60px;}-->
+</style>
+
+</head>
+<body background="http://cdns2.freepik.com/fotos-gratis/_53-17256.jpg">
+<div class="navbar-wrapper">
+  <div class="container">
+    <div class="navbar navbar-inverse navbar-static-top">
+      
+        <div class="navbar-header">
+	    <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	    </a>
+        
+         </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        <li><a href="@routes.Application.index()">Home</a>
+        </li>
+        <li><a href="@routes.Application.criar()" method="post">Criar Anúncio </a></li>
+        <li class="active"><a href="@routes.Application.pesquisa()" method="post">Pesquisar Anúncio</a></li>
+    </ul>
+    </div>
+</div>
+</div>
+</div>
+    <div class="carousel-inner">
+    <div class="item active">
+          <img src="http://www.locasom.com.br/Imagens/BackGround/669.jpg">
+    
+      <div class="container">
+        <div class="carousel-caption">
+        <h1>Pesquisar Anúncios</h1>
+         <p></p>
+          
+        </div>
+      </div>
+    </div>
+
+        <table class="table table-hover">
+            <tr><label>Pesquisar por: </label></tr>
+            <tr>
+            <form action="@routes.Application.pesquisarAnuncio()" method="post">
+                        <div class="radio">
+
+                            <label><input value="1" name="optradio" type="radio" required="required"><strong> Título</strong></label>
+                            <input type="text" name="pesquisa" required="required"/>
+                            <input type="submit" name="botao_pesquisar" class="btn btn-primary" value="Pesquisar">
+
+                        </div>
+            </form>
+            </tr>
+
+            <tr>
+            <form action="@routes.Application.pesquisarAnuncio()" method="post">
+                    <div class="radio">
+
+                            <label><input value="2" name="optradio" type="radio"><strong>Instrumento</strong></label>
+                            <input type="text" name="pesquisa" required="required"/>
+                            <input type="submit" name="botao_pesquisar" class="btn btn-primary" value="Pesquisar">
+                    </div>
+            </form>
+            </tr>
+
+            <tr>
+            <form action="@routes.Application.pesquisarAnuncio()" method="post">
+                    <div class="radio">
+                            <label><input value="3" name="optradio" type="radio"><strong>Estilo que gosta</strong></label>
+                            <input type="text" name="pesquisa" required="required"/>
+                            <input type="submit" name="botao_pesquisar" class="btn btn-primary" value="Pesquisar">
+                    </div>
+            </form>
+            </tr>
+
+            <tr>
+            <form action="@routes.Application.pesquisarAnuncio()" method="post">
+
+                     <div class="radio">
+                         <label><input value="4" name="optradio" type="radio"><strong>Objetivo</strong></label>
+                         <input  list="objetivo" name="objetivo" required="required">
+                         <datalist id="objetivo">
+                             <option value="Tocar Ocasionalmente">
+                             <option value="Procuro Banda">
+                             <option value="Procuro musico">
+                             </datalist>
+                         <input type="submit" name="botao_pesquisar" class="btn btn-primary" value="Pesquisar">
+                     </div>
+            </form>
+            </tr>
+
+
+
+           </table>
+    </div>
+</div>
+<div class="content">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+        <h2 class="text-center">@anuncios.size() anuncio(s) encontrados no total</h2>
+
+
+
+
+        @for(anuncio <- anuncios) {
+        <details>
+            <summary><strong>Título:</strong> @anuncio.getNome()</summary>
+            <p><strong>Objetivo:</strong> @anuncio.getObjetivo()</p>
+            <p><strong>Cidade:</strong> @anuncio.getCidade() </p>
+            <p><strong>Email:</strong> @anuncio.getEmail()</p>
+            <p><strong>Facebook:</strong> @anuncio.getFace()</p>
+            <p><strong>Instrumentos:</strong> @anuncio.getInstrumentos()</p>
+            <p><strong>Estilos que gosta:</strong> @anuncio.getEstiloGosta()</p>
+            <p><strong>Estilos que não gosta:</strong> @anuncio.getEstiloNaoGosta()</p>
+        }
+        </details>
+    </div>
+</div>
+
+
+<!-- jQuery -->
+<script src="http://code.jquery.com/jquery.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+</body>
+</html>
+    

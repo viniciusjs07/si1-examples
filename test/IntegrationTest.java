@@ -20,10 +20,10 @@ public class IntegrationTest extends WithBrowser {
         //será carregado, e o onStart() executará. Daí o fato de
         //já termos livros para serem visualizados.
         browser.goTo("http://localhost:" + testServer.port());
-        assertThat(browser.pageSource()).contains("Adiciona um livro");
-        assertThat(browser.pageSource()).contains("Harry Potter");
+        assertThat(browser.pageSource()).contains("Adiciona um anuncio");
+        assertThat(browser.pageSource()).contains("Procura banda");
         // aqui testamos também se o Global.java conseguiu adicionar os livros no BD
-        assertThat(browser.pageSource()).contains("50 livro(s)");
+        assertThat(browser.pageSource()).contains("0 anuncio(s)");
     }
 
     @Test

@@ -1,0 +1,143 @@
+@(anuncios: List[Anuncio])
+
+<html lang="">
+    <head>
+        <title>Stilo Musical</title>
+        <meta charset="UTF-8">
+        <meta name=description content="">
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap CSS -->
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+          
+          <style type="text/css">
+	<!--h1 {font-size: 60px;}-->
+	<!--p {font-size: 40px;}-->
+	<!--h2{color:#29C011;}-->
+</style>
+    </head>
+    <body background="http://www.rephase.pt/images/background-dark.jpg">
+    
+    
+    
+     <div class="navbar-wrapper">
+  <div class="container">
+    <div class="navbar navbar-inverse navbar-static-top">
+      
+        <div class="navbar-header">
+	    <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	    </a>
+        
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="@routes.Application.index()">Home</a></li>
+            
+            
+               <ul class="nav navbar-nav">
+                <li><a href="@routes.Application.criar()" method="post">Criar Anúncio</a></li>
+                <li><a href="@routes.Application.pesquisa()" method="post">Pesquisar Anúncio</a></li>   
+
+            </ul>
+           
+          </ul>
+        </div>
+
+    </div>
+  </div><!-- /container -->
+</div><!-- /navbar wrapper -->
+
+<div id="myCarousel" class="carousel slide">
+  <!-- Indicators -->
+  
+  <div class="carousel-inner">
+    <div class="item active">
+      <img src="http://imguol.com/c/entretenimento/2013/08/02/1ago2013---plateia-assiste-show-da-banda-de-metal-alema-rammstein-1375461271965_965x367.jpg" style="width:100%" class="img-responsive">
+      <div class="container">
+        <div class="carousel-caption">
+      
+          <h1> <strong>Welcome To Place The Musical Encounters </strong></h1>
+          		<p>Crie seu Anúncio</p>
+          
+        </div>
+      </div>
+    </div>
+    	
+    
+     <div class="content">
+    	<div class="col-sm-7">
+        <h2><strong>Criar Anúncio</strong></h2>
+        <form action="@routes.Application.newAnuncio()" method="post">
+        <label for="nome"> Título do Anúncio:</label>
+        	<input type="text" title="Aqui" name="nome" id="inputNome" class="form-control"  placeholder="Título do Anuncio" required="required">
+        	
+        <label for="cidade">Cidade:</label>
+        	<input type="text" title="Aqui" name="cidade" id="inputCidade" class="form-control"  placeholder="Cidade do Anunciante" required="required">
+        
+        <label for="bairro">Bairro:</label>
+        	<input type="text" title="Aqui" name="bairro" id="inputBairro" class="form-control"  placeholder="Bairro do Anunciante" required="required">
+        	
+       <label for="instrumentos">Instrumento(s) que toca:</label>
+        	<input type="text" title="Aqui" name="instrumentos" id="inputInstrumentos" class="form-control"  placeholder="Instrumento(s) do Anunciante">
+        	
+      <label for="estilo">Qual seu Estilo Musical:</label>
+        	<input type="text" title="Aqui" name="estilo" id="inputEstilo" class="form-control"  placeholder="Estilo(s) do Anunciante">
+        	
+       
+       <label for="email">Email:</label>
+        	<input type="email" title="Aqui" name="email" id="inputEmail" class="form-control" placeholder="Email do Usuário" required="required">
+        	
+        <label for="facebook">Facebook:</label>
+        	<input type="url" title="Aqui" name="facebook" id="inputFacebook" class="form-control"  placeholder="Facebook do Anunciante" required="required">
+        	
+        <label for="objetivo"> Objetivo: </label>
+            <input list="objetivo" name="objetivo" required="required">
+            <datalist id="objetivo">
+                <option value="Tocar Ocasionalmente">
+                <option value="Procuro Banda">
+                <option value="Procuro musico">
+            </datalist>
+
+                   <div class="radio">
+                <label><input value="1" name="objetivo" type="radio" required="required">Tocar Ocasionamente</label>
+            </div>
+            <div class="radio">
+                <label><input value="2" name="objetivo" type="radio">Procuro banda</label>
+            </div>
+            <div class="radio">
+                <label><input value="3" name="objetivo" type="radio">Procuro musico</label>
+            </div>
+            -->
+        <label for="estiloGosta"> Estilo(s) que você gosta: </label>
+            <input type="text" name="estiloGosta" id="estiloGosta" placeholder="Estilo(s) que você gosta" tittle="Aqui" class="form-control">
+        <label for="estiloNaoGosta"> Estilo(s) que você não gosta: </label>
+            <input type="text" name="estiloNaoGosta" id="estiloNaoGosta" placeholder="Estilo(s) que você não gosta" tittle="Aqui" class="form-control">
+        <label for="codigo">Código do anúncio</label>
+            <input type="password" name="codigo" id="codigo" placeholder="Código do Anúncio" tittle="Aqui" class="form-control">
+            <br>
+            
+            <button type="submit" class="btn btn-success btn-lg">Publicar Anúncio</button>
+           </form>
+            </div>
+           	
+        <!-- jQuery -->
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+        
+	</div>
+</div>
+
+    </body>
+</html>
+
+
+
+<ul>
+    
+</ul>
+
+    
